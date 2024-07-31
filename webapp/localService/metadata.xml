@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="1.0" xmlns:edmx="http://schemas.microsoft.com/ado/2007/06/edmx" xmlns:m="http://schemas.microsoft.com/ado/2007/08/dataservices/metadata" xmlns:sap="http://www.sap.com/Protocols/SAPData">
+    <edmx:Reference Uri="https://sap.github.io/odata-vocabularies/vocabularies/Common.xml" xmlns:edmx="http://docs.oasis-open.org/odata/ns/edmx">
+        <edmx:Include Alias="Common" Namespace="com.sap.vocabularies.Common.v1"/>
+    </edmx:Reference>
+    <edmx:Reference Uri="https://oasis-tcs.github.io/odata-vocabularies/vocabularies/Org.OData.Core.V1.xml" xmlns:edmx="http://docs.oasis-open.org/odata/ns/edmx">
+        <edmx:Include Alias="Core" Namespace="Org.OData.Core.V1"/>
+    </edmx:Reference>
+    <edmx:Reference Uri="https://sap.github.io/odata-vocabularies/vocabularies/UI.xml" xmlns:edmx="http://docs.oasis-open.org/odata/ns/edmx">
+        <edmx:Include Alias="UI" Namespace="com.sap.vocabularies.UI.v1"/>
+    </edmx:Reference>
+    <edmx:DataServices m:DataServiceVersion="2.0">
+        <Schema Namespace="zcompanymgmt.srv.service.zcompanymgmt" xmlns="http://schemas.microsoft.com/ado/2008/09/edm">
+            <EntityContainer Name="EntityContainer" m:IsDefaultEntityContainer="true">
+                <EntitySet Name="MODULE" EntityType="zcompanymgmt.srv.service.zcompanymgmt.MODULE"/>
+                <EntitySet Name="EMPLOYEE" EntityType="zcompanymgmt.srv.service.zcompanymgmt.EMPLOYEE"/>
+                <EntitySet Name="PROJECT" EntityType="zcompanymgmt.srv.service.zcompanymgmt.PROJECT"/>
+                <EntitySet Name="CV" EntityType="zcompanymgmt.srv.service.zcompanymgmt.CV"/>
+                <AssociationSet Name="EMPLOYEE_EMP_MODULE" Association="zcompanymgmt.srv.service.zcompanymgmt.EMPLOYEE_EMP_MODULE">
+                    <End Role="EMPLOYEE" EntitySet="EMPLOYEE"/>
+                    <End Role="MODULE" EntitySet="MODULE"/>
+                </AssociationSet>
+                <AssociationSet Name="EMPLOYEE_EMP_PROJECT" Association="zcompanymgmt.srv.service.zcompanymgmt.EMPLOYEE_EMP_PROJECT">
+                    <End Role="EMPLOYEE" EntitySet="EMPLOYEE"/>
+                    <End Role="PROJECT" EntitySet="PROJECT"/>
+                </AssociationSet>
+                <AssociationSet Name="EMPLOYEE_EMP_CV" Association="zcompanymgmt.srv.service.zcompanymgmt.EMPLOYEE_EMP_CV">
+                    <End Role="EMPLOYEE" EntitySet="EMPLOYEE"/>
+                    <End Role="CV" EntitySet="CV"/>
+                </AssociationSet>
+            </EntityContainer>
+            <EntityType Name="MODULE">
+                <Key>
+                    <PropertyRef Name="MODULE_ID"/>
+                </Key>
+                <Property Name="MODULE_ID" Type="Edm.String" Nullable="false"/>
+                <Property Name="MODULE_NAME" Type="Edm.String"/>
+                <Property Name="MODULE_TYPE" Type="Edm.String"/>
+                <Property Name="MODULE_CODE" Type="Edm.String"/>
+            </EntityType>
+            <EntityType Name="EMPLOYEE">
+                <Key>
+                    <PropertyRef Name="EMP_ID"/>
+                </Key>
+                <Property Name="createdAt" Type="Edm.DateTimeOffset" Precision="7"/>
+                <Property Name="createdBy" Type="Edm.String" MaxLength="255"/>
+                <Property Name="modifiedAt" Type="Edm.DateTimeOffset" Precision="7"/>
+                <Property Name="modifiedBy" Type="Edm.String" MaxLength="255"/>
+                <Property Name="EMP_ID" Type="Edm.Int32" Nullable="false"/>
+                <Property Name="EMP_NAME" Type="Edm.String"/>
+                <Property Name="EMP_NUMBER" Type="Edm.Int32"/>
+                <NavigationProperty Name="EMP_MODULE" Relationship="zcompanymgmt.srv.service.zcompanymgmt.EMPLOYEE_EMP_MODULE" FromRole="EMPLOYEE" ToRole="MODULE"/>
+                <Property Name="EMP_MODULE_MODULE_ID" Type="Edm.String"/>
+                <Property Name="EMP_COUNTRY" Type="Edm.String"/>
+                <Property Name="EMP_AGE" Type="Edm.Int32"/>
+                <Property Name="EMP_EXPERIENCE" Type="Edm.Int32"/>
+                <Property Name="EMP_CTC" Type="Edm.Int32"/>
+                <NavigationProperty Name="EMP_PROJECT" Relationship="zcompanymgmt.srv.service.zcompanymgmt.EMPLOYEE_EMP_PROJECT" FromRole="EMPLOYEE" ToRole="PROJECT"/>
+                <Property Name="EMP_PROJECT_PRJ_ID" Type="Edm.Int32"/>
+                <NavigationProperty Name="EMP_CV" Relationship="zcompanymgmt.srv.service.zcompanymgmt.EMPLOYEE_EMP_CV" FromRole="EMPLOYEE" ToRole="CV"/>
+                <Property Name="EMP_CV_FILE_ID" Type="Edm.Guid"/>
+            </EntityType>
+            <EntityType Name="PROJECT">
+                <Key>
+                    <PropertyRef Name="PRJ_ID"/>
+                </Key>
+                <Property Name="PRJ_ID" Type="Edm.Int32" Nullable="false"/>
+                <Property Name="PRJ_NAME" Type="Edm.String"/>
+                <Property Name="PRJ_START_DATE" Type="Edm.DateTime" sap:display-format="Date"/>
+                <Property Name="PRJ_END_DATE" Type="Edm.DateTime" sap:display-format="Date"/>
+                <Property Name="PRJ_STATUS" Type="Edm.String"/>
+            </EntityType>
+            <EntityType Name="CV" m:HasStream="true">
+                <Key>
+                    <PropertyRef Name="FILE_ID"/>
+                </Key>
+                <Property Name="FILE_ID" Type="Edm.Guid" Nullable="false"/>
+                <Property Name="MEDIA_TYPE" Type="Edm.String"/>
+                <Property Name="FILE_NAME" Type="Edm.String"/>
+                <Property Name="URL" Type="Edm.String"/>
+            </EntityType>
+            <Association Name="EMPLOYEE_EMP_MODULE">
+                <End Role="EMPLOYEE" Type="zcompanymgmt.srv.service.zcompanymgmt.EMPLOYEE" Multiplicity="*"/>
+                <End Role="MODULE" Type="zcompanymgmt.srv.service.zcompanymgmt.MODULE" Multiplicity="0..1"/>
+                <ReferentialConstraint>
+                    <Principal Role="MODULE">
+                        <PropertyRef Name="MODULE_ID"/>
+                    </Principal>
+                    <Dependent Role="EMPLOYEE">
+                        <PropertyRef Name="EMP_MODULE_MODULE_ID"/>
+                    </Dependent>
+                </ReferentialConstraint>
+            </Association>
+            <Association Name="EMPLOYEE_EMP_PROJECT">
+                <End Role="EMPLOYEE" Type="zcompanymgmt.srv.service.zcompanymgmt.EMPLOYEE" Multiplicity="*"/>
+                <End Role="PROJECT" Type="zcompanymgmt.srv.service.zcompanymgmt.PROJECT" Multiplicity="0..1"/>
+                <ReferentialConstraint>
+                    <Principal Role="PROJECT">
+                        <PropertyRef Name="PRJ_ID"/>
+                    </Principal>
+                    <Dependent Role="EMPLOYEE">
+                        <PropertyRef Name="EMP_PROJECT_PRJ_ID"/>
+                    </Dependent>
+                </ReferentialConstraint>
+            </Association>
+            <Association Name="EMPLOYEE_EMP_CV">
+                <End Role="EMPLOYEE" Type="zcompanymgmt.srv.service.zcompanymgmt.EMPLOYEE" Multiplicity="*"/>
+                <End Role="CV" Type="zcompanymgmt.srv.service.zcompanymgmt.CV" Multiplicity="0..1"/>
+                <ReferentialConstraint>
+                    <Principal Role="CV">
+                        <PropertyRef Name="FILE_ID"/>
+                    </Principal>
+                    <Dependent Role="EMPLOYEE">
+                        <PropertyRef Name="EMP_CV_FILE_ID"/>
+                    </Dependent>
+                </ReferentialConstraint>
+            </Association>
+            <Annotations Target="zcompanymgmt.srv.service.zcompanymgmt.EMPLOYEE/createdAt" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+                <Annotation Term="UI.HiddenFilter" Bool="true"/>
+                <Annotation Term="Core.Immutable" Bool="true"/>
+                <Annotation Term="Core.Computed" Bool="true"/>
+                <Annotation Term="Common.Label" String="Created On"/>
+            </Annotations>
+            <Annotations Target="zcompanymgmt.srv.service.zcompanymgmt.EMPLOYEE/createdBy" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+                <Annotation Term="UI.HiddenFilter" Bool="true"/>
+                <Annotation Term="Core.Immutable" Bool="true"/>
+                <Annotation Term="Core.Computed" Bool="true"/>
+                <Annotation Term="Core.Description" String="User's unique ID"/>
+                <Annotation Term="Common.Label" String="Created By"/>
+            </Annotations>
+            <Annotations Target="zcompanymgmt.srv.service.zcompanymgmt.EMPLOYEE/modifiedAt" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+                <Annotation Term="UI.HiddenFilter" Bool="true"/>
+                <Annotation Term="Core.Computed" Bool="true"/>
+                <Annotation Term="Common.Label" String="Changed On"/>
+            </Annotations>
+            <Annotations Target="zcompanymgmt.srv.service.zcompanymgmt.EMPLOYEE/modifiedBy" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+                <Annotation Term="UI.HiddenFilter" Bool="true"/>
+                <Annotation Term="Core.Computed" Bool="true"/>
+                <Annotation Term="Core.Description" String="User's unique ID"/>
+                <Annotation Term="Common.Label" String="Changed By"/>
+            </Annotations>
+            <Annotations Target="zcompanymgmt.srv.service.zcompanymgmt.CV" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+                <Annotation Term="Core.MediaType" String="Application/pdf"/>
+            </Annotations>
+            <Annotations Target="zcompanymgmt.srv.service.zcompanymgmt.CV/FILE_ID" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+                <Annotation Term="Core.ComputedDefaultValue" Bool="true"/>
+            </Annotations>
+            <Annotations Target="zcompanymgmt.srv.service.zcompanymgmt.CV/MEDIA_TYPE" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+                <Annotation Term="Core.IsMediaType" Bool="true"/>
+            </Annotations>
+        </Schema>
+    </edmx:DataServices>
+</edmx:Edmx>

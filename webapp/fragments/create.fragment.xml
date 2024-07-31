@@ -1,0 +1,114 @@
+<core:FragmentDefinition
+    xmlns="sap.m"
+    xmlns:core="sap.ui.core"
+    xmlns:form="sap.ui.layout.form"
+    xmlns:u="sap.ui.unified"
+    xmlns:upload="sap.m.upload"
+>
+    <Dialog
+        title="Create Employee"
+        titleAlignment="Center"
+    >
+        <form:SimpleForm>
+            <!-- <Label text="Employee ID" />
+            <Input
+                id="INP_ID"
+                
+            /> -->
+            <Label text="Employee Name" />
+            <Input
+                type="Text"
+                id="INP_NAME"
+                placeholder="Enter Employee Name"
+                value="{Company>/createEmployee/EMP_NAME}"
+            />
+            <Label text="Employee Number" />
+            <Input
+                type="Number"
+                id="INP_NUMBER"
+                placeholder="Enter Employee Number"
+                value="{Company>/createEmployee/EMP_NUMBER}"
+            />
+            <Label text="Employee Country" />
+            <Input
+                type="Text"
+                id="INP_COUNTRY"
+                placeholder="Enter Employee Country"
+                value="{Company>/createEmployee/EMP_COUNTRY}"
+            />
+            <Label text="Employee CTC" />
+            <Input
+                type="Number"
+                id="INP_CTC"
+                placeholder="Enter Employee CTC"
+                value="{Company>/createEmployee/EMP_CTC}"
+            />
+            <Label text="Employee Experience" />
+            <Input
+                type="Number"
+                id="INP_EXP"
+                placeholder="Enter Employee Experience"
+                value="{Company>/createEmployee/EMP_EXPERIENCE}"
+            />
+            <Label text="Employee Age" />
+            <Input
+                type="Number"
+                id="INP_AGE"
+                placeholder="Enter Employee Age"
+                value="{Company>/createEmployee/EMP_AGE}"
+            />
+
+            <Label text="Employee Module" />
+            <ComboBox
+                items="{Company>/SelectedModule}"
+                id="INP_MODULE"
+                placeholder="Enter Employee Module"
+                value="{Company>/createEmployee/EMP_MODULE_MODULE_ID} {Company>MODULE_ID}"
+            >
+                <core:Item
+                    key="{Company>MODULE_ID}"
+                    text="{Company>MODULE_NAME}"
+                />
+            </ComboBox>
+            <Label text="Upload Your CV" />
+            
+            <upload:UploadSet
+                id="UploadSet"
+                instantUpload="true"
+                uploadUrl="/v2/odata"
+                beforeUploadStarts="onBeforeUploadStarts"
+                afterItemAdded="onAfterItemAdded"
+                uploadTerminated="onUploadTerminated"
+            />
+            <!-- <u:FileUploader
+                id="fileUploader"
+                name="myFileUpload"
+                uploadUrl="/v2/odata/"
+                tooltip="Upload your file to the local server"
+                uploadComplete="handleUploadComplete"
+                value="{Company>/EMP_CV}"
+                change="handleUploadChange"
+            />
+            <Button
+                text="Upload File"
+                press="handleUploadPress"
+                width="30%"
+            /> -->
+        </form:SimpleForm>
+        <buttons>
+            <Button
+                text="Save"
+                icon="sap-icon://save"
+                press="onAddNewEmp"
+                type="Emphasized"
+            />
+            <Button
+                id="idCancelPop"
+                icon="sap-icon://decline"
+                text="Cancel"
+                type="Negative"
+                press="onCancelDialog"
+            />
+        </buttons>
+    </Dialog>
+</core:FragmentDefinition>

@@ -1,0 +1,205 @@
+<mvc:View
+    controllerName="zcompanymgmt.controller.DisplayEmployee"
+    xmlns:mvc="sap.ui.core.mvc"
+    displayBlock="true"
+    xmlns="sap.m"
+    xmlns:filterbar="sap.ui.comp.filterbar"
+    xmlns:core="sap.ui.core"
+    xmlns:form="sap.ui.layout.form"
+    xmlns:uxap="sap.uxap"
+    xmlns:upload="sap.m.upload"
+>
+    <Page
+        title="Display Employee"
+        showNavButton="true"
+        navButtonPress="onDisplayEmployeeNavPress"
+    >
+        <content>
+            
+
+            <uxap:ObjectPageLayout
+                id="ObjectPageLayout"
+                showTitleInHeaderContent="true"
+                alwaysShowContentHeader="false"
+                preserveHeaderStateOnScroll="false"
+                headerContentPinnable="true"
+                isChildPage="true"
+                upperCaseAnchorBar="false"
+            >
+                <uxap:headerTitle>
+                    <uxap:ObjectPageDynamicHeaderTitle>
+                        <uxap:expandedHeading>
+                            <Title text="{Company>/SelectedEmployee/EMP_ID}" />
+                        </uxap:expandedHeading>
+                        <uxap:expandedContent>
+                            <Text text="{Company>/SelectedEmployee/EMP_NAME}" />
+                        </uxap:expandedContent>
+                    </uxap:ObjectPageDynamicHeaderTitle>
+                </uxap:headerTitle>
+                <uxap:headerContent>
+                    <FlexBox
+                        wrap="Wrap"
+                        fitContainer="true"
+                        alignItems="Stretch"
+                    />
+                </uxap:headerContent>
+                <uxap:sections>
+                    <uxap:ObjectPageSection
+                        titleUppercase="false"
+                        title="Employee Details"
+                    >
+                        <uxap:subSections>
+                            <uxap:ObjectPageSubSection>
+                                <uxap:blocks>
+                                    <form:SimpleForm>
+                                        <HBox>
+                                            <VBox
+                                                width="50%"
+                                                class="sapUiTinyMarginBegin"
+                                            >
+                                                <Label text="Employee Id:" />
+                                                <Text
+                                                    text="{Company>/SelectedEmployee/EMP_ID}"
+                                                    class="sapUiSmallMarginBottom"
+                                                />
+                                                <Label text="Employee Name:" />
+                                                <Text
+                                                    text="{Company>/SelectedEmployee/EMP_NAME}"
+                                                    class="sapUiSmallMarginBottom"
+                                                />
+                                                <Label
+                                                    text="Employee Country:"
+                                                />
+                                                <Text
+                                                    text="{Company>/SelectedEmployee/EMP_COUNTRY}"
+                                                    class="sapUiSmallMarginBottom"
+                                                />
+                                                <Label text="Employee CTC:" />
+                                                <Text
+                                                    text="{Company>/SelectedEmployee/EMP_CTC}"
+                                                    class="sapUiSmallMarginBottom"
+                                                />
+                                                <Label
+                                                    text="Employee Experience:"
+                                                />
+                                                <Text
+                                                    text="{Company>/SelectedEmployee/EMP_EXPERIENCE}"
+                                                    class="sapUiSmallMarginBottom"
+                                                />
+                                                <Label text="Employee Age:" />
+                                                <Text
+                                                    text="{Company>/SelectedEmployee/EMP_AGE}"
+                                                    class="sapUiSmallMarginBottom"
+                                                />
+                                                <Label
+                                                    text="Employee Module:"
+                                                />
+                                                <Text
+                                                    text="{Company>/SelectedEmployee/EMP_MODULE_MODULE_ID}"
+                                                    class="sapUiSmallMarginBottom"
+                                                />
+                                            </VBox>
+                                            <VBox
+                                                width="50%"
+                                                class="sapUiLargeMarginBegin"
+                                            >
+                                                <Label text="Created At:" />
+                                                <Text
+                                                    text="{Company>/SelectedEmployee/createdAt}"
+                                                    class="sapUiSmallMarginBottom"
+                                                />
+                                                <Label text="Created By:" />
+                                                <Text
+                                                    text="{Company>/SelectedEmployee/createdBy}"
+                                                    class="sapUiSmallMarginBottom"
+                                                />
+                                                <Label text="Modified At:" />
+                                                <Text
+                                                    text="{Company>/SelectedEmployee/modifiedAt}"
+                                                    class="sapUiSmallMarginBottom"
+                                                />
+                                                <Label text="Modified By:" />
+                                                <Text
+                                                    text="{Company>/SelectedEmployee/modifiedBy}"
+                                                    class="sapUiSmallMarginBottom"
+                                                />
+                                                <Label
+                                                    text="Preview Employee CV"
+                                                />
+                                                <!-- <Button text="Preview Employee CV"  type="Emphasized" icon="sap-icon://attachment-zip-file" press="onPreviewPress"></Button> -->
+                                                <!-- <Link text="Open CV" href="{Company>/Employee/EMP_CV/URL}"/> -->
+                                            </VBox>
+                                        </HBox>
+                                    </form:SimpleForm>
+
+                                    <!-- <Table
+                                        id="purchaseOrderTable"
+                                        items="{Company>/Employee/TASK_ID/results}"
+                                        updateFinished="onUpdateFinished"
+                                        mode="SingleSelectMaster"
+                                        selectionChange="onTaskSelectionChange"
+                                    >
+                                        <headerToolbar>
+                                            <OverflowToolbar>
+                                                <Title
+                                                    text="{i18n>taskCount} ({Company>/iTaskCount})"
+                                                />
+                                                <ToolbarSpacer />
+                                                <Button
+                                                    text="Delete"
+                                                    icon="sap-icon://delete"
+                                                    type="Negative"
+                                                    press="onDeleteTask"
+                                                />
+                                                <Button
+                                                    text="Create"
+                                                    icon="sap-icon://add"
+                                                    type="Emphasized"
+                                                    press="onCreateTask"
+                                                />
+                                            </OverflowToolbar>
+                                        </headerToolbar>
+                                        <columns>
+                                            <Column>
+                                                <Label text="Task Id" />
+                                            </Column>
+                                            <Column>
+                                                <Label text="Task Name" />
+                                            </Column>
+                                        </columns>
+                                        <ColumnListItem type="Navigation">
+                                            <Text text="{Company>TASK_ID}" />
+                                            <Text text="{Company>TASK_NAME}" />
+                                        </ColumnListItem>
+                                    </Table> -->
+                                    <upload:UploadSet
+                                        showIcons="true"
+                                        uploadEnabled="true"
+                                        terminationEnabled="true"
+                                        fileTypes="txt,doc,png"
+                                        maxFileNameLength="30"
+                                        maxFileSize="200"
+                                        mode="MultiSelect"
+                                        beforeUploadStarts="onBeforeUploadStarts"
+                                        afterItemAdded="onAfterItemAdded"
+                                        selectionChanged="onFileSelectionChange"
+                                        uploadUrl="/v2/odata"
+                                    >
+                                        <upload:items>
+                                            <upload:UploadSetItem
+                                                fileName="{Company>/SelectedEmployee/FILE_NAME}"
+                                                mediaType="{Company>/SelectedEmployee/MEDIA_TYPE}"
+                                                url="{Company>/SelectedEmployee/URL}"
+                                                openPressed="onLinkPressed"
+                                            />
+                                        </upload:items>
+                                    </upload:UploadSet>
+                                </uxap:blocks>
+                            </uxap:ObjectPageSubSection>
+                        </uxap:subSections>
+                    </uxap:ObjectPageSection>
+                </uxap:sections>
+            </uxap:ObjectPageLayout>
+        </content>
+    </Page>
+</mvc:View>
